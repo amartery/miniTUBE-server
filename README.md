@@ -1,28 +1,37 @@
 # miniTUBE-server
 # АРХИТЕКТУРА
-
 корневой URL
 http://[hostname]/minitube/api/v1.0/
 
 1) метод HTTP : GET  
-URI : http://[hostname]/minitube/api/v1.0/list_video  
-Действие : получить список видео-файлов  
-
-2) метод HTTP : GET  
-URI : http://[hostname]/minitube/api/v1.0/list_video/[video_id]  
-Действие : получить видео-файл c названием [video_id]  
-
-3) метод HTTP : GET  
 URI : http://[hostname]/  
 Действие : получить index.html  
 
+2) метод HTTP : GET  
+URI : http://[hostname]/minitube/api/v1.0/list_video  
+Действие : получить список видео-файлов  
+
+3) метод HTTP : GET  
+URI : http://[hostname]/minitube/api/v1.0/list_video/[video_id]  
+Действие : получить видео-файл c ID [video_id]  
+
+4) метод HTTP : GET  
+URI : http://[hostname]/minitube/api/v1.0/list_video/[video_id]/get_preview  
+Действие : получить превью для видео-файла c ID [video_id]  
+
+# DEPENDENCES
+nginx  
+nginx rtmp-module - https://github.com/arut/nginx-rtmp-module  
+pytho3 or python3 with flask  
+ffmeg  
+dash.js  
 
 # HOW RUN
 
 PYTHON 3  
 python3 -m venv myvenv  
 source myvenv/bin/activate  
-python3 -m  pip install flask   
+python3 -m  pip install flask  
 python3 app.py  
 
 PYTHON 2  
@@ -57,6 +66,8 @@ curl -i http://localhost:5000/minitube/api/v1.0/list_video
 запуск ffmeg для видео с названием <video_id>  
 curl -i http://localhost:5000/minitube/api/v1.0/list_video/<video_id>  
 
+получене превью
+curl -i http://localhost:5000/minitube/api/v1.0/list_video/<video_id>/get_preview
 
 
 # NGINX
@@ -77,4 +88,4 @@ chmod a+x app.py
 curl -i http://localhost:5000/minitube/api/v1.0/list_video  
 
 # FFMEG setup (команда используемая в скрипте python)
-ffmpeg -re -i <full_path> -vcodec libx264 -vprofile baseline -g 30 -acodec aac -strict -2 -f flv rtmp://localhost/myapp/mystream
+ffmpeg -re -i <full_path_to_video> -vcodec libx264 -vprofile baseline -g 30 -acodec aac -strict -2 -f flv rtmp://localhost/myapp/mystream
