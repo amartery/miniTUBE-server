@@ -1,0 +1,82 @@
+sudo apt-get update
+sudo apt install aptitude
+sudo apt install gcc
+sudo apt install make
+sudo apt-get install ffmpeg
+
+VIDEO ABOUT INSTALLNGINX + RTMP MODULE
+https://www.youtube.com/watch?time_continue=183&v=WLiZGkgrntg&feature=emb_logo
+
+NGINX + RTMP MODULE
+mkdir rtmp
+cd rtmp
+git clone https://github.com/arut/nginx-rtmp-module
+wget http://nginx.org/download/nginx-1.14.2.tar.gz
+tar -xvf nginx-1.14.2.tar.gz
+cd cd nginx-1.14.2
+
+./configure --add-module=</path/to/nginx-rtmp-module>
+
+in my case:
+./configure --add-module=/home/amartery/rtmp/nginx-rtmp-module
+
+POSSIBLE ERRORS:
+if ./configure: error: the HTTP rewrite module requires the PCRE library.
+sudo aptitude install libpcre++-dev
+
+if ./configure: error: SSL modules require the OpenSSL library.
+sudo aptitude install libssl-dev
+
+if ./configure: error: the HTTP gzip module requires the zlib library.
+sudo aptitude install zlib1g-dev
+
+NEXT STEP:
+make 
+sudo make install
+
+
+PYTHON (установка из исходников)
+cd ~
+wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
+tar xvf Python-3.8.*
+cd Python-3.8.1
+mkdir ~/.python
+./configure --enable-optimizations --prefix=yor_path</home/amartery>/.python
+make -j8
+sudo make altinstall
+Now python3.8.1 in /home/amartery/Python-3.8.1 
+Update pip:
+sudo /home/amartery/.python/bin/python3.8 -m pip install -U pip
+sudo apt-get install python3-venv
+
+DASH.JS
+cd /var
+sudo mkdir www
+cd www
+git clone https://github.com/arut/dash.js.git
+sudo git checkout live
+sudo vim baseline.html
+Открываем в редакторе baseline.html и находим строчку со стандартным урлом
+url = "http://dash.edgesuite.net/envivio/dashpr/clear/Manifest.mpd",
+Заменяем на наш урл
+url = "http://localhost:8080/dash/mystream.mpd".
+
+
+miniTYBE PROGECT
+git clone https://github.com/amartery/miniTUBE-server
+
+
+RUN
+nginx d.conf run
+sudo /usr/local/nginx/sbin/nginx -c /home/amartery/miniTUBE-server/d.conf
+cheking and killing
+ps -ax | grep nginx
+sudo kill -s QUIT 4157
+sudo systemctl stop nginx
+
+python3 -m venv env
+. ./env/bin/activate
+pip3 install flask
+
+
+

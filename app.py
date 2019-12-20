@@ -1,7 +1,7 @@
 #!flask/bin/python
 from flask import Flask, jsonify, abort, request, make_response, url_for, render_template, send_file
 from collections import deque
-
+from flask_cors import CORS, cross_origin
 import os
 import uuid
 import subprocess as sp
@@ -9,6 +9,8 @@ import subprocess as sp
 
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def create_list_video():  # available video files in /home/amartery/tp_progect/video
@@ -51,11 +53,13 @@ def index():
 
 
 @app.route('/minitube/api/v1.0/list_video', methods=['GET'])  # available video page
+@cross_origin()
 def get_list_video():
     return jsonify({'available video files': list_video})
 
 
 @app.route('/minitube/api/v1.0/list_video/<string:video_id>', methods=['GET'])
+@cross_origin()
 def get_video(video_id):
     if video_id not in list_video.keys():
         abort(404)
