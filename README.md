@@ -34,14 +34,7 @@ source myvenv/bin/activate
 python3 -m  pip install flask  
 python3 app.py  
 
-PYTHON 2  
-virtualenv flask  
-flask/bin/pip install flask  
-chmod a+x app.py  
-./app.py  
-
-
-Для зауска необходим dash.js  
+# Для зауска необходим dash.js  
 Скачиваем и устанавливаем dash.js из форка  
 скачиваем dash.js в /var/www  
 cd /var/www  
@@ -63,7 +56,7 @@ curl -i http://localhost:5000/
 получение списка доступных видео файлов в дирректории /home/amartery/tp_progect/video  
 curl -i http://localhost:5000/minitube/api/v1.0/list_video  
 
-запуск ffmeg для видео с названием <video_id>  
+запуск ffmeg для видео с названием <video_id>, возвращает строку http://localhost:8080/dash/mystream<id_thread>.mpd  
 curl -i http://localhost:5000/minitube/api/v1.0/list_video/<video_id>  
 
 получене превью
@@ -82,8 +75,7 @@ sudo systemctl stop nginx
 запускаем nginx  
 sudo /usr/local/nginx/sbin/nginx -c <your_path>/tp_progect/d.conf  
 запуск серевера  
-chmod a+x app.py  
-./app.py  
+python3 app.py   
 получение списка доступных видео файлов в дирректории   <your_path>/video  
 curl -i http://localhost:5000/minitube/api/v1.0/list_video  
 
