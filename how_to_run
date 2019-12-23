@@ -73,6 +73,7 @@ cheking and killing
 ps -ax | grep nginx
 sudo kill -s QUIT 4157
 sudo systemctl stop nginx
+sudo /usr/local/nginx/sbin/nginx -s stop
 
 python3 -m venv env
 . ./env/bin/activate
