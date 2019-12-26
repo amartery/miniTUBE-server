@@ -2,10 +2,13 @@
 from flask import Flask, jsonify, abort, request, make_response, url_for, render_template, send_file
 from collections import deque
 from flask_cors import CORS, cross_origin
-from threading import Thread
+
 import os
 import uuid
 import subprocess as sp
+import time
+import os.path
+
 
 
 
@@ -16,9 +19,9 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def create_list_video():  # available video files in /home/amartery/tp_progect/video
-    directory = '/home/amartery/tp_progect/video'  # add  the <yor_path_to_video>/video/
+    directory = '/home/amartery/aksdfhk/video'  # add  the <yor_path_to_video>/video/
     files = os.listdir(directory)
-    filtered_files = filter(lambda x: x.endswith('.mp4'), files)  # only mp4 files
+    filtered_files = filter(lambda x: x.endswith('.mpd'), files)  # only mp4 files
 
     files_queue = deque()  # create a queue of files
     files_queue += filtered_files
@@ -59,25 +62,18 @@ def get_list_video():
     return jsonify({'available video files': list_video})
 
 
-def get_video(video_id, threadId):
+ 
+
+@app.route('/minitube/api/v1.0/list_video/<string:video_id>', methods=['GET'])
+@cross_origin()
+def get_video(video_id):
+
     if video_id not in list_video.keys():
         abort(404)
 
     filename = list_video[video_id]
-    full_path = '/home/amartery/tp_progect/video/' + filename  # add  the <yor_path_to_video>/video/
-    command = 'ffmpeg -re -i {} -vcodec libx264 -vprofile baseline -g 30 -acodec aac -strict -2 -f flv rtmp://localhost/myapp/mystream{}'.format(full_path, threadId)
-    sp.call(command,shell=True)
-   
-
-threadId = 0  # global variable for count ID thread
-@app.route('/minitube/api/v1.0/list_video/<string:video_id>', methods=['GET'])
-@cross_origin()
-def start(video_id):
-    global threadId
-    threadId += 1  # change ID thread
-    th = Thread(target=get_video, args=(video_id, threadId,))  # create new thread
-    th.start()  # starting new thread
-    return 'http://localhost:8080/dash/mystream{}.mpd'.format(threadId)
+    full_path = '/home/amartery/aksdfhk/video/' + filename  # add  the <yor_path_to_video>/video/
+    return 'http://localhost:8080/video/{}'.format(filename)
 
 
 @app.route('/minitube/api/v1.0/list_video/<string:video_id>/get_preview')
@@ -88,7 +84,7 @@ def get_preview(video_id):
     name_video_file = list_video[video_id]
     name = name_video_file[:-3]  # remove the file extension (mp4)
     filename = name + 'jpg'  # add new extension (jpg)
-    full_path = '/home/amartery/tp_progect/preview/' + filename  # add  the <yor_path_to_preview>/preview/
+    full_path = '/home/amartery/aksdfhk/preview/' + filename  # add  the <yor_path_to_preview>/preview/
     return send_file(full_path, mimetype='image/gif')
 
 
