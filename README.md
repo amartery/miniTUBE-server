@@ -25,6 +25,7 @@ nginx rtmp-module - https://github.com/arut/nginx-rtmp-module
 pytho3 or python3 with flask  
 ffmeg  
 dash.js  
+mp4box  
 
 # HOW RUN
 
@@ -47,7 +48,8 @@ url = "http://dash.edgesuite.net/envivio/dashpr/clear/Manifest.mpd",
 url = "http://localhost:8080/dash/mystream.mpd".  
 Далее заходим в браузер на страницу http://localhost:8080/dash.js/baseline.html.  
 
-
+# mp4box
+sudo apt-get install gpac  
 
 # CURL
 возвращает /home/amartery/tp_progect/templates/index.html  
